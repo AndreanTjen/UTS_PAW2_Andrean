@@ -6,8 +6,27 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var andreansRouter = require('./routes/andreans');
+
+const mongoose = require('mongoose');
 
 var app = express();
+
+app.use(function(req,res,next){
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods",
+    "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader("Acess-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    next();
+});
+
+mongoose.connect(
+  "mongodb://localhost:27017/dbPariwisata"
+).then(()=>{
+  console.log("Connected to Database")
+}).catch((err)=>{
+  console.log("Connected Failed")
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
